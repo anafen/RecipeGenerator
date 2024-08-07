@@ -39,6 +39,14 @@ def generateRecipe(client, ings, use_only_listed):
 
     return completion.choices[0].message.content
 
+def save_recipe(recipe):
+    save = input("Do you want to save the recipe? (yes/no): ").strip().lower()
+    if save == 'yes':
+        file_name = input("Enter the file name to save the recipe (don't include the extension): ").strip()
+        with open(file_name + ".txt", "w") as file:
+            file.write(recipe)
+        print(f"Recipe saved as {file_name}.txt")
+
 def main():
     # Load environment variables from .env file
     load_dotenv()
@@ -62,7 +70,7 @@ def main():
             recipe = generateRecipe(client, ingredients, False)
         
         print(recipe)
-    
+        save_recipe(recipe)
     else:
         print('There were no ingredients entered.')
 
